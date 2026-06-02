@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The CCC AI Center of Excellence Stack Map v1.2 | Clear Concise Consulting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>  :root {
+    --navy: #003366;
+    --navy-light: #1a4d80;
+    --beige: #E8E0D5;
+    --beige-warm: #F0E9DD;
+    --beige-pale: #F7F2EA;
+    --body: #333333;
+    --muted: #666666;
+    --muted-light: #999999;
+    --line: #CCCCCC;
+    --line-soft: #E5E5E5;
+    --white: #FFFFFF;
+
+    /* Domain accent colors - distinct but harmonious with navy/beige base */
+    --foundations: #003366;
+    --operating:   #5B6B8C;
+    --checkpoints: #8B3A2C;
+    --tools:       #2A6FB5;
+    --services:    #3A6B3A;
+    --controls:    #6B3A8B;
+    --metrics:     #B58A1A;
+
+    /* Risk band colors (top edge of cells) */
+    --risk-critical:   #B8472A;
+    --risk-core:       #C49B4A;
+    --risk-supporting: #5A9270;
+
+    /* Governance strip mark colors */
+    --mark-pii:      #B8472A;
+    --mark-mutation: #6B3A8B;
+    --mark-audit:    #2A6FB5;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--beige);
+    color: var(--body);
+    font-family: 'Lato', -apple-system, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  body { min-height: 100vh; padding: 32px 28px 80px; }
+  .container { max-width: 1480px; margin: 0 auto; }
+
+  /* ===== HEADER ===== */
+  header {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--navy);
+    padding: 44px 36px 28px;
+    margin-bottom: 24px;
+    display: grid;
+    grid-template-columns: 96px 1fr auto;
+    gap: 28px;
+    align-items: center;
+    position: relative;
+  }
+  .back-link {
+    position: absolute;
+    top: 12px;
+    left: 36px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .back-link:hover { color: var(--navy); }
+  .back-link::before {
+    content: "‹";
+    font-size: 14px;
+    line-height: 1;
+    margin-top: -1px;
+  }
+  .logo { width: 96px; height: 96px; object-fit: contain; }
+  .title-block { border-left: 1px solid var(--line); padding-left: 28px; }
+  .eyebrow {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.18em;
+    color: var(--muted); margin-bottom: 10px;
+  }
+  h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: clamp(26px, 3.4vw, 36px);
+    line-height: 1.15; letter-spacing: -0.01em;
+    color: var(--navy);
+  }
+  .subtitle {
+    font-size: 14px; color: var(--muted);
+    margin-top: 8px; font-style: italic;
+  }
+  .header-meta {
+    text-align: right;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.14em;
+    color: var(--muted); line-height: 1.9;
+  }
+  .header-meta .em { color: var(--navy); }
+
+  /* ===== LENS TOGGLE ===== */
+  .lens-bar {
+    background: var(--white);
+    border: 1px solid var(--line);
+    padding: 14px 22px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .lens-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.14em;
+    color: var(--navy); white-space: nowrap;
+  }
+  .lens-buttons {
+    display: flex; gap: 0;
+    border: 1px solid var(--line);
+  }
+  .lens-btn {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    padding: 9px 16px;
+    background: var(--beige-warm);
+    border: none;
+    border-right: 1px solid var(--line);
+    color: var(--muted);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .lens-btn:last-child { border-right: none; }
+  .lens-btn:hover { background: var(--beige); color: var(--navy); }
+  .lens-btn.active { background: var(--navy); color: var(--white); }
+
+  .lens-search {
+    flex: 1;
+    min-width: 240px;
+    max-width: 360px;
+    position: relative;
+  }
+  .lens-search input {
+    width: 100%;
+    padding: 9px 80px 9px 38px;
+    background: var(--beige-warm);
+    border: 1px solid var(--line);
+    font-family: 'Lato', sans-serif;
+    font-size: 13px;
+    outline: none;
+  }
+  .lens-search input:focus { border-color: var(--navy); background: var(--white); }
+  .search-count {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--navy);
+    background: var(--beige);
+    padding: 3px 8px;
+    letter-spacing: 0.06em;
+    display: none;
+    pointer-events: none;
+  }
+  .search-count.visible { display: inline-block; }
+  .lens-search::before {
+    content: ""; position: absolute;
+    left: 14px; top: 50%;
+    width: 11px; height: 11px;
+    transform: translateY(-60%);
+    border: 1.5px solid var(--muted);
+    border-radius: 50%; pointer-events: none;
+  }
+  .lens-search::after {
+    content: ""; position: absolute;
+    left: 23px; top: 21px;
+    width: 5px; height: 1.5px;
+    background: var(--muted);
+    transform: rotate(45deg);
+    transform-origin: left center;
+    pointer-events: none;
+  }
+
+  /* ===== HOW TO READ ===== */
+  .how-to-read {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--navy);
+    margin-bottom: 22px;
+  }
+  .how-to-read summary {
+    list-style: none; cursor: pointer;
+    padding: 14px 22px;
+    display: flex; justify-content: space-between;
+    align-items: center;
+  }
+  .how-to-read summary::-webkit-details-marker { display: none; }
+  .how-to-read summary:hover { background: var(--beige-pale); }
+  .summary-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.14em;
+    color: var(--navy);
+  }
+  .summary-arrow {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--navy); font-size: 14px;
+    transition: transform 0.2s;
+  }
+  .how-to-read[open] .summary-arrow { transform: rotate(180deg); }
+  .how-to-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    padding: 22px 24px 24px;
+    border-top: 1px solid var(--line);
+  }
+  .how-to-col h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px; font-weight: 700;
+    color: var(--navy);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    margin-bottom: 10px; line-height: 1.3;
+  }
+  .how-to-col p {
+    font-size: 13px; line-height: 1.6;
+    color: var(--body);
+  }
+
+  /* ===== BAND 1: DOMAIN MAP ===== */
+  .stack-map {
+    background: var(--white);
+    border: 1px solid var(--line);
+    padding: 24px;
+    margin-bottom: 18px;
+  }
+  .domains-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: minmax(160px, auto);
+    gap: 14px;
+  }
+  .domain {
+    background: var(--beige-pale);
+    border: 1px solid var(--line-soft);
+    border-top: 3px solid var(--domain-color, var(--navy));
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+  }
+  .domain-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .domain-name {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--domain-color, var(--navy));
+  }
+  .domain-count {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+  .domain-cells {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(78px, 1fr));
+    gap: 6px;
+    flex: 1;
+    align-content: flex-start;
+  }
+
+  /* Domain spans within the 12-col grid */
+  .domain[data-domain="foundations"] { grid-column: span 6; grid-row: span 2; --domain-color: var(--foundations); }
+  .domain[data-domain="checkpoints"] { grid-column: span 6; grid-row: span 1; --domain-color: var(--checkpoints); }
+  .domain[data-domain="tools"]       { grid-column: span 6; grid-row: span 1; --domain-color: var(--tools); }
+  .domain[data-domain="operating"]   { grid-column: span 4; grid-row: span 1; --domain-color: var(--operating); }
+  .domain[data-domain="services"]    { grid-column: span 8; grid-row: span 1; --domain-color: var(--services); }
+  .domain[data-domain="controls"]    { grid-column: span 6; grid-row: span 1; --domain-color: var(--controls); }
+  .domain[data-domain="metrics"]     { grid-column: span 6; grid-row: span 1; --domain-color: var(--metrics); }
+
+  /* ===== INDIVIDUAL CELL ===== */
+  .cell {
+    background: var(--white);
+    border: 1px solid var(--line-soft);
+    border-top: 3px solid var(--risk-color, var(--line));
+    padding: 6px 7px 7px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    position: relative;
+    min-height: 64px;
+    transition: transform 0.12s, box-shadow 0.12s, opacity 0.25s, background 0.12s;
+    user-select: none;
+    overflow: hidden;
+  }
+  .cell:hover {
+    background: var(--beige-pale);
+    transform: translateY(-1px);
+    box-shadow: 1px 2px 0 var(--navy);
+    z-index: 5;
+    border-color: var(--navy);
+  }
+  .cell.dimmed { opacity: 0.18; pointer-events: none; }
+  .cell.match {
+    box-shadow: 0 0 0 2px var(--navy);
+    background: var(--white);
+    z-index: 3;
+  }
+  .cell.emphasized {
+    border-color: var(--risk-color, var(--navy));
+    box-shadow: 0 0 0 1px var(--risk-color, var(--navy)), 2px 3px 0 var(--risk-color, var(--navy));
+    background: var(--white);
+    z-index: 4;
+    border-top-width: 5px;
+  }
+  .cell.emphasized .cell-name { color: var(--navy); }
+
+  /* Weighted cells take more space */
+  .cell[data-weight="2"] { min-height: 78px; }
+  .cell[data-weight="3"] { min-height: 92px; }
+
+  .cell[data-risk="critical"]   { --risk-color: var(--risk-critical); }
+  .cell[data-risk="core"]       { --risk-color: var(--risk-core); }
+  .cell[data-risk="supporting"] { --risk-color: var(--risk-supporting); }
+
+  .cell-code {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 8px;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+  .cell-layer {
+    position: absolute;
+    top: 5px; right: 5px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 7px;
+    font-weight: 700;
+    color: var(--muted-light);
+    letter-spacing: 0.04em;
+  }
+  .cell-name {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 1.15;
+    color: var(--body);
+    margin-top: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+  .cell-marks {
+    display: flex;
+    gap: 3px;
+    margin-top: 4px;
+  }
+  .cell-mark {
+    width: 8px; height: 8px;
+    border-radius: 1px;
+    opacity: 0.85;
+  }
+  .cell-mark.pii      { background: var(--mark-pii); }
+  .cell-mark.mutation { background: var(--mark-mutation); }
+  .cell-mark.audit    { background: var(--mark-audit); }
+  .cell-mark.ai-glow  {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FFD700 0%, #B58A1A 100%);
+    box-shadow: 0 0 4px rgba(255, 215, 0, 0.6);
+  }
+
+  /* ===== BAND 2: GOVERNANCE STRIP ===== */
+  .gov-strip {
+    background: var(--white);
+    border: 1px solid var(--line);
+    padding: 24px;
+    margin-bottom: 18px;
+  }
+  .gov-strip-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .gov-strip-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--navy);
+  }
+  .gov-strip-legend {
+    display: flex;
+    gap: 18px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  .gov-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .gov-legend-swatch {
+    width: 10px; height: 10px;
+    border-radius: 1px;
+  }
+  .gov-legend-swatch.pii      { background: var(--mark-pii); }
+  .gov-legend-swatch.mutation { background: var(--mark-mutation); }
+  .gov-legend-swatch.audit    { background: var(--mark-audit); }
+
+  .gov-grid {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 12px;
+    align-items: center;
+  }
+  .gov-row-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-align: right;
+    padding-right: 8px;
+  }
+  .gov-row {
+    display: flex;
+    gap: 1px;
+    flex-wrap: wrap;
+  }
+  .gov-tick {
+    flex: 1 0 auto;
+    width: 6px;
+    height: 22px;
+    background: var(--line-soft);
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+  .gov-tick.active.pii      { background: var(--mark-pii); }
+  .gov-tick.active.mutation { background: var(--mark-mutation); }
+  .gov-tick.active.audit    { background: var(--mark-audit); }
+  .gov-tick:hover { transform: scaleY(1.15); }
+  .gov-tick.hover-match { transform: scaleY(1.3); box-shadow: 0 0 0 1px var(--navy); }
+
+  .gov-summary {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line-soft);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+  }
+  .gov-summary-stat {
+    text-align: center;
+  }
+  .gov-summary-num {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--navy);
+    letter-spacing: -0.01em;
+  }
+  .gov-summary-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  /* ===== BAND 3: INDEX ===== */
+  .index-band {
+    background: var(--white);
+    border: 1px solid var(--line);
+    padding: 24px;
+    margin-bottom: 18px;
+    display: grid;
+    grid-template-columns: 1.2fr 2fr 1.2fr;
+    gap: 28px;
+  }
+  .index-col h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--navy);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .legend-list {
+    list-style: none;
+    font-size: 11px;
+    line-height: 1.7;
+    color: var(--body);
+  }
+  .legend-list li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .legend-swatch {
+    width: 12px; height: 12px;
+    flex-shrink: 0;
+  }
+  .legend-swatch.foundations { background: var(--foundations); }
+  .legend-swatch.operating   { background: var(--operating); }
+  .legend-swatch.checkpoints { background: var(--checkpoints); }
+  .legend-swatch.tools       { background: var(--tools); }
+  .legend-swatch.services    { background: var(--services); }
+  .legend-swatch.controls    { background: var(--controls); }
+  .legend-swatch.metrics     { background: var(--metrics); }
+  .legend-swatch.critical    { background: var(--risk-critical); height: 4px; align-self: center; }
+  .legend-swatch.core        { background: var(--risk-core); height: 4px; align-self: center; }
+  .legend-swatch.supporting  { background: var(--risk-supporting); height: 4px; align-self: center; }
+  .legend-swatch.pii-mark      { background: var(--mark-pii); }
+  .legend-swatch.mutation-mark { background: var(--mark-mutation); }
+  .legend-swatch.audit-mark    { background: var(--mark-audit); }
+  .legend-swatch.ai-mark       { background: linear-gradient(135deg, #FFD700 0%, #B58A1A 100%); border-radius: 50%; }
+  .legend-code {
+    font-family: 'Menlo', 'Consolas', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--muted);
+    background: var(--beige-pale);
+    padding: 1px 6px;
+    margin-right: 4px;
+  }
+  .index-list {
+    list-style: none;
+    font-size: 11px;
+    line-height: 1.55;
+    columns: 2;
+    column-gap: 18px;
+  }
+  .index-item {
+    break-inside: avoid;
+    margin-bottom: 6px;
+    padding-left: 8px;
+    border-left: 2px solid var(--line-soft);
+  }
+  .index-item strong {
+    color: var(--navy);
+    font-family: 'Menlo', 'Consolas', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin-right: 4px;
+  }
+  .index-item .name {
+    font-weight: 700;
+    color: var(--body);
+  }
+  .index-item .desc {
+    color: var(--muted);
+    font-style: italic;
+    font-size: 10.5px;
+  }
+  .orient-text {
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--body);
+  }
+  .orient-text strong {
+    color: var(--navy);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    display: block;
+    margin-top: 12px;
+    margin-bottom: 6px;
+  }
+  .orient-text strong:first-child { margin-top: 0; }
+
+  /* ===== DETAIL PANEL ===== */
+  .detail-panel {
+    position: fixed;
+    bottom: 0; right: 0;
+    width: min(480px, 92vw);
+    max-height: 85vh;
+    background: var(--white);
+    border-left: 1px solid var(--line);
+    border-top: 1px solid var(--line);
+    box-shadow: -4px -4px 16px rgba(0, 51, 102, 0.12);
+    transform: translateY(105%);
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    z-index: 100;
+    overflow-y: auto;
+  }
+  .detail-panel.open { transform: translateY(0); }
+  .detail-header {
+    padding: 0 26px 22px;
+    background: var(--navy);
+    color: var(--white);
+    position: relative;
+  }
+  .detail-cat-bar {
+    height: 4px;
+    background: var(--cat-color, var(--white));
+    margin: 0 -26px 22px;
+  }
+  .detail-code {
+    font-family: 'Menlo', 'Consolas', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    opacity: 0.85;
+    background: rgba(255,255,255,0.12);
+    padding: 2px 8px;
+    display: inline-block;
+  }
+  .detail-name-block {
+    font-family: 'Montserrat', sans-serif;
+    margin-top: 8px;
+  }
+  .detail-name {
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+  .detail-full {
+    font-size: 13px;
+    opacity: 0.85;
+    margin-top: 4px;
+    font-style: italic;
+  }
+  .detail-pills {
+    margin-top: 14px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .detail-pill {
+    padding: 4px 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--white);
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+  .detail-pill[data-risk="critical"]   { background: var(--risk-critical); border-color: var(--risk-critical); }
+  .detail-pill[data-risk="core"]       { background: var(--risk-core);     border-color: var(--risk-core); }
+  .detail-pill[data-risk="supporting"] { background: var(--risk-supporting); border-color: var(--risk-supporting); }
+  .detail-close {
+    position: absolute;
+    top: 18px; right: 18px;
+    height: 28px; padding: 0 12px;
+    border: 1px solid rgba(255,255,255,0.5);
+    background: transparent; color: inherit;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.14em;
+    display: flex; align-items: center;
+    z-index: 2;
+  }
+  .detail-close:hover { background: rgba(255,255,255,0.15); border-color: var(--white); }
+  .detail-body { padding: 22px 26px; }
+  .detail-row {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line-soft);
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 16px;
+    align-items: baseline;
+  }
+  .detail-row:last-child { border-bottom: none; }
+  .detail-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+  }
+  .detail-value {
+    font-size: 13.5px;
+    color: var(--body);
+    line-height: 1.55;
+  }
+  .detail-marks {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .detail-mark-pill {
+    padding: 3px 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--white);
+  }
+  .detail-mark-pill.pii      { background: var(--mark-pii); }
+  .detail-mark-pill.mutation { background: var(--mark-mutation); }
+  .detail-mark-pill.audit    { background: var(--mark-audit); }
+  .detail-mark-pill.ai-glow  {
+    background: linear-gradient(135deg, #FFD700 0%, #B58A1A 100%);
+    color: var(--navy);
+  }
+  .control-callout {
+    margin-top: 4px;
+    padding: 12px 14px;
+    background: var(--beige-pale);
+    border-left: 3px solid var(--navy);
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--body);
+  }
+  .control-callout-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--navy);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    margin-top: 28px;
+    padding: 20px 24px;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--navy);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  footer .right { text-align: right; }
+  footer a { color: var(--navy); text-decoration: none; font-weight: 700; }
+  footer a:hover { text-decoration: underline; }
+  .footer-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    color: var(--navy);
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    margin-bottom: 4px;
+    display: block;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 980px) {
+    .domain[data-domain="foundations"] { grid-column: span 12; grid-row: span 1; }
+    .domain[data-domain="checkpoints"],
+    .domain[data-domain="tools"],
+    .domain[data-domain="operating"],
+    .domain[data-domain="services"],
+    .domain[data-domain="controls"],
+    .domain[data-domain="metrics"]     { grid-column: span 12; grid-row: span 1; }
+    .index-band { grid-template-columns: 1fr; }
+    .index-list { columns: 1; }
+  }
+  @media (max-width: 720px) {
+    body { padding: 18px 14px 60px; }
+    header { grid-template-columns: 64px 1fr; gap: 18px; padding: 38px 18px 22px; }
+    .back-link { left: 18px; top: 10px; font-size: 9px; }
+    .header-meta {
+      display: block;
+      text-align: left;
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line-soft);
+      grid-column: 1 / -1;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+    }
+    .header-meta > div {
+      display: inline-block;
+      margin-right: 14px;
+      line-height: 1.4;
+    }
+    .logo { width: 64px; height: 64px; }
+    .title-block { padding-left: 18px; }
+    h1 { font-size: 22px; }
+    .lens-bar { gap: 12px; }
+    .lens-search { max-width: 100%; }
+    .how-to-content { grid-template-columns: 1fr; gap: 18px; }
+    .gov-summary { grid-template-columns: repeat(2, 1fr); }
+    footer { grid-template-columns: 1fr; }
+    footer .right { text-align: left; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: 0.01ms !important; }
+  }
+
+  @media print {
+    body { background: white; padding: 0.4in; }
+    .lens-bar, .detail-panel, .how-to-read { display: none; }
+    .domain { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<header>
+  <a href="https://clearconciseconsulting.com" class="back-link">Back to clearconciseconsulting.com</a>
+  <img src="data:image/png;base64,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" alt="Clear Concise Consulting" class="logo">
+  <div class="title-block">
+    <div class="eyebrow">Clear Concise Consulting · Stack Map · AI Center of Excellence</div>
+    <h1>The AI CoE Stack Map</h1>
+    <div class="subtitle">A governance practice in seven domains, fifty-five elements, and three accountability lenses.</div>
+  </div>
+  <div class="header-meta">
+    <div><span class="em">55</span> Elements</div>
+    <div><span class="em">7</span> Domains</div>
+    <div>v1.2 · May 2026</div>
+  </div>
+</header>
+
+<section class="lens-bar">
+  <span class="lens-label">View</span>
+  <div class="lens-buttons" role="group" aria-label="Lens toggle">
+    <button class="lens-btn active" data-lens="domain">By Domain</button>
+    <button class="lens-btn" data-lens="risk">By Risk</button>
+    <button class="lens-btn" data-lens="ai">AI Surface</button>
+  </div>
+  <div class="lens-search">
+    <input type="text" id="search" placeholder="Search by name, code, or description..." autocomplete="off">
+    <span class="search-count" id="search-count" aria-live="polite"></span>
+  </div>
+</section>
+
+<details class="how-to-read" open>
+  <summary>
+    <span class="summary-label">How to read this stack map</span>
+    <span class="summary-arrow">▾</span>
+  </summary>
+  <div class="how-to-content">
+    <div class="how-to-col">
+      <h3>Three bands, one practice.</h3>
+      <p>The top band is the Domain Map: every element of the AI CoE practice grouped into seven color-coded domains. Cell size and risk-tier color edge tell you what carries weight. Click any cell to open the detail panel. The middle band is the Governance Strip: a single horizontal view of all 55 elements scored on three governance dimensions. The bottom band is the index, legend, and orientation.</p>
+    </div>
+    <div class="how-to-col">
+      <h3>Three governance marks tell the story.</h3>
+      <p>PII (red): elements that touch personal or sensitive client data. Mutation (purple): elements that involve changes to client systems, data, or configurations. Audit (blue): elements that produce or require audit evidence. The mark you do not see in the strip is as informative as the one you do. A row that lights up red is the PII surface of the entire practice. The gold dot in the corner of cells marks elements activated for AI and agentic engagements.</p>
+    </div>
+    <div class="how-to-col">
+      <h3>Three lenses, one chart.</h3>
+      <p>The lens toggle at the top rotates the entire map without changing the underlying data. By Domain is the default and shows the practice as designed. By Risk emphasizes critical elements and dims supporting ones. AI Surface shows only what activates when an engagement involves Agentforce or Headless 360. Use the search to find anything by name, code, or description.</p>
+    </div>
+  </div>
+</details>
+
+<section class="stack-map" id="stack-map">
+  <div class="domains-grid" id="domains-grid"></div>
+</section>
+
+<section class="gov-strip">
+  <div class="gov-strip-header">
+    <div class="gov-strip-title">Governance Strip</div>
+    <div class="gov-strip-legend">
+      <div class="gov-legend-item"><div class="gov-legend-swatch pii"></div>PII</div>
+      <div class="gov-legend-item"><div class="gov-legend-swatch mutation"></div>Mutation</div>
+      <div class="gov-legend-item"><div class="gov-legend-swatch audit"></div>Audit</div>
+    </div>
+  </div>
+  <div class="gov-grid">
+    <div class="gov-row-label">PII</div>
+    <div class="gov-row" id="gov-row-pii"></div>
+    <div class="gov-row-label">Mutation</div>
+    <div class="gov-row" id="gov-row-mutation"></div>
+    <div class="gov-row-label">Audit</div>
+    <div class="gov-row" id="gov-row-audit"></div>
+  </div>
+  <div class="gov-summary">
+    <div class="gov-summary-stat">
+      <div class="gov-summary-num" id="stat-total">55</div>
+      <div class="gov-summary-label">Elements Visible</div>
+    </div>
+    <div class="gov-summary-stat">
+      <div class="gov-summary-num" id="stat-pii">28</div>
+      <div class="gov-summary-label">Touch PII</div>
+    </div>
+    <div class="gov-summary-stat">
+      <div class="gov-summary-num" id="stat-mutation">24</div>
+      <div class="gov-summary-label">Mutate Systems</div>
+    </div>
+    <div class="gov-summary-stat">
+      <div class="gov-summary-num" id="stat-audit">47</div>
+      <div class="gov-summary-label">Produce Audit</div>
+    </div>
+  </div>
+</section>
+
+<section class="index-band">
+  <div class="index-col">
+    <h3>Legend</h3>
+    <ul class="legend-list">
+      <li><div class="legend-swatch foundations"></div>Foundations</li>
+      <li><div class="legend-swatch operating"></div>Operating Model</li>
+      <li><div class="legend-swatch checkpoints"></div>Checkpoints</li>
+      <li><div class="legend-swatch tools"></div>Tools &amp; Frameworks</li>
+      <li><div class="legend-swatch services"></div>Services</li>
+      <li><div class="legend-swatch controls"></div>Risk Controls</li>
+      <li><div class="legend-swatch metrics"></div>Metrics</li>
+      <li style="margin-top: 12px; padding-top: 8px; border-top: 1px solid var(--line-soft);"><div class="legend-swatch critical"></div>Critical (top edge)</li>
+      <li><div class="legend-swatch core"></div>Core (top edge)</li>
+      <li><div class="legend-swatch supporting"></div>Supporting (top edge)</li>
+      <li style="margin-top: 12px; padding-top: 8px; border-top: 1px solid var(--line-soft);"><div class="legend-swatch pii-mark"></div>PII mark</li>
+      <li><div class="legend-swatch mutation-mark"></div>Mutation mark</li>
+      <li><div class="legend-swatch audit-mark"></div>Audit mark</li>
+      <li><div class="legend-swatch ai-mark"></div>AI Surface (gold dot)</li>
+      <li style="margin-top: 12px; padding-top: 8px; border-top: 1px solid var(--line-soft);"><span class="legend-code">DOC</span> Document</li>
+      <li><span class="legend-code">PROCESS</span> Process</li>
+      <li><span class="legend-code">TOOL</span> Tool</li>
+      <li><span class="legend-code">SERVICE</span> Service</li>
+      <li><span class="legend-code">CONTROL</span> Control</li>
+      <li><span class="legend-code">METRIC</span> Metric</li>
+    </ul>
+  </div>
+  <div class="index-col">
+    <h3>Index</h3>
+    <ul class="index-list" id="index-list"></ul>
+  </div>
+  <div class="index-col">
+    <h3>Orientation</h3>
+    <div class="orient-text">
+      <strong>What this is</strong>
+      The CCC AI Center of Excellence as an operational map. Not just a service catalog, not just a framework: the full inventory of what the practice runs on.
+      <strong>Who it is for</strong>
+      Engagement leads pricing and scoping AI work. Clients deciding where to start. Auditors and reviewers wanting to see how governance is structured. Partners considering referral.
+      <strong>How to use it</strong>
+      Use the lens toggle to ask different questions. By Risk shows what fails first. AI Surface shows what activates when agents enter the picture. Click any cell for the decision frame: what to control, where to draw the line.
+      <strong>What it is not</strong>
+      A marketing brochure. The detail panels say what to control, not what to buy. Pricing is in the cells; the structure earns it.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <span class="footer-title">Clear Concise Consulting</span>
+    Salesforce architecture for organizations governing AI deployment with discipline.<br>
+    The AI CoE is the practice. The Stack Map is the map.
+  </div>
+  <div class="right">
+    <span class="footer-title">AI CoE Stack Map v1.2</span>
+    Click any cell or index entry for the decision frame.<br>
+    Sources verified May 6, 2026 via primary documentation.<br>
+    <a href="https://clearconciseconsulting.com">clearconciseconsulting.com</a>
+  </div>
+</footer>
+
+</div>
+
+<aside class="detail-panel" id="detail-panel" aria-hidden="true">
+  <div class="detail-header">
+    <div class="detail-cat-bar" id="detail-cat-bar"></div>
+    <div class="detail-code" id="detail-code"></div>
+    <div class="detail-name-block">
+      <div class="detail-name" id="detail-name"></div>
+      <div class="detail-full" id="detail-full"></div>
+    </div>
+    <div class="detail-pills" id="detail-pills"></div>
+    <button class="detail-close" id="detail-close" aria-label="Close panel">CLOSE</button>
+  </div>
+  <div class="detail-body" id="detail-body"></div>
+</aside>
+
+<script>
+const ELEMENTS = [
+  { code:'F.01', name:'Mission', full:'Practice Mission Statement', domain:'foundations', layer:'DOC', risk:'core', pii:false, mutation:false, audit:true, ai:false, weight:2, desc:'Make responsible AI adoption practical, measurable, and sustainable for organizations running Salesforce, grounded in clean data, human oversight, and documented governance.', control:'Anchor every engagement decision back to this. Drift here is drift everywhere.' },
+  { code:'F.02', name:'In-Scope', full:'Engagement Scope (In)', domain:'foundations', layer:'DOC', risk:'core', pii:false, mutation:false, audit:false, ai:false, weight:1, desc:'Defined services CCC delivers: governance frameworks, Agentforce/Einstein/Data Cloud readiness, data quality audits, human-in-the-loop protocols, regulatory mapping, training, AI Decision Log setup, agentic governance.', control:'Scope creep starts when a client asks for something here that lives next door. Note it, scope it, repackage it.' },
+  { code:'F.03', name:'Out-of-Scope', full:'Engagement Scope (Out)', domain:'foundations', layer:'DOC', risk:'core', pii:false, mutation:false, audit:false, ai:false, weight:1, desc:'Explicitly excluded: custom AI/ML model development, data science services, non-Salesforce AI platforms, legal advice on AI regulations.', control:'State out-of-scope items in writing at engagement kickoff. Disagreements about scope happen six weeks in, not on day one.' },
+  { code:'F.04', name:'DataFirst', full:'Principle: Data First', domain:'foundations', layer:'DOC', risk:'critical', pii:true, mutation:true, audit:true, ai:true, weight:2, desc:'No AI feature is activated until data quality is assessed. Clean data is a prerequisite, not a parallel workstream.', control:'This is the principle that gates Checkpoint 1. If data quality scores below 7, engagement does not proceed to AI activation.' },
+  { code:'F.05', name:'Oversight', full:'Principle: Human Oversight', domain:'foundations', layer:'DOC', risk:'critical', pii:true, mutation:true, audit:true, ai:true, weight:2, desc:'Every AI-assisted decision has a documented human review gate. Automated actions are bounded by explicit scope limits.', control:'For agentic engagements: every data-modifying action requires a human confirmation gate. Read-only can proceed autonomously.' },
+  { code:'F.06', name:'Transp.', full:'Principle: Transparency', domain:'foundations', layer:'DOC', risk:'core', pii:false, mutation:false, audit:true, ai:true, weight:1, desc:'AI governance documentation written in plain language for four audiences: executives, project managers, technical teams, end users.', control:'Test by reading aloud to a non-technical stakeholder. If it needs a translator, it\'s not transparent yet.' },
+  { code:'F.07', name:'Account.', full:'Principle: Accountability', domain:'foundations', layer:'DOC', risk:'critical', pii:false, mutation:true, audit:true, ai:true, weight:1, desc:'Every AI deployment has a named human owner responsible for outcomes. AI does not make consequential decisions without human authorization.', control:'Named owner in writing, in the engagement intake. No \'TBD\' allowed at deployment.' },
+  { code:'F.08', name:'Proport.', full:'Principle: Proportionality', domain:'foundations', layer:'DOC', risk:'core', pii:false, mutation:true, audit:false, ai:true, weight:1, desc:'Governance controls are proportional to risk. Low-risk automations receive lighter review. High-impact AI decisions receive mandatory multi-step validation.', control:'Use case risk classification feeds checkpoint depth. Don\'t apply enterprise governance to a Lead routing automation.' },
+  { code:'F.09', name:'Reversible', full:'Principle: Reversibility', domain:'foundations', layer:'DOC', risk:'critical', pii:false, mutation:true, audit:true, ai:true, weight:1, desc:'Every AI deployment includes a documented rollback procedure. If something goes wrong, the system returns to its pre-AI state within a defined timeframe.', control:'Test the rollback before launch. An untested rollback is not a rollback.' },
+  { code:'F.10', name:'NIST', full:'NIST AI RMF 1.0', domain:'foundations', layer:'DOC', risk:'core', pii:false, mutation:false, audit:true, ai:true, weight:2, desc:'Primary organizing framework. Four functions (Govern, Map, Measure, Manage) structure all governance checkpoints. Reference includes NIST AI RMF 1.0 (Jan 2023), the Generative AI Profile NIST-AI-600-1 (originally July 2024, updated April 8, 2026), and the Critical Infrastructure Profile concept note (April 7, 2026).', control:'Every checkpoint maps to a NIST function. If you can\'t map it, you don\'t need it.' },
+  { code:'F.11', name:'ISO42001', full:'ISO 42001 Controls', domain:'foundations', layer:'DOC', risk:'supporting', pii:false, mutation:false, audit:true, ai:true, weight:1, desc:'Controls reference for rigor. Plan-Do-Check-Act cycle informs continuous improvement. Future certification target.', control:'Procurement teams at enterprise prospects ask for ISO 42001 alignment. Track gaps quarterly.' },
+  { code:'F.12', name:'TrustedAI', full:'Salesforce Trusted AI', domain:'foundations', layer:'DOC', risk:'core', pii:true, mutation:false, audit:true, ai:true, weight:1, desc:'Platform-level governance. Einstein Trust Layer, audit trails, topic classification, data masking. HIPAA Security Rule overhaul currently on the OCR regulatory agenda for May 2026 finalization, though delays or modifications are possible. If finalized, expect prescriptive cybersecurity requirements for ePHI.', control:'Verify Trust Layer masking is active for all sensitive fields before any agent goes live.' },
+  { code:'F.13', name:'EUAIAct', full:'EU AI Act', domain:'foundations', layer:'DOC', risk:'core', pii:true, mutation:false, audit:true, ai:true, weight:1, desc:'August 2, 2026 enforcement date for Annex III high-risk systems remains legally in force. The Digital Omnibus deferral package failed at the April 28, 2026 trilogue; a follow-up trilogue is scheduled for around May 13, 2026. The dispute concerned Annex I conformity assessment for embedded AI in regulated products, not Annex III. Plan against the binding August 2 deadline; a delay is possible but not guaranteed.', control:'Classify every use case under EU AI Act risk tiers. High-risk systems trigger additional governance.' },
+  { code:'O.01', name:'Director', full:'CoE Director', domain:'operating', layer:'PROCESS', risk:'critical', pii:false, mutation:false, audit:false, ai:false, weight:2, desc:'Practice strategy, framework development, quality standards, regulatory monitoring, thought leadership, advisory network management. Single role holds strategy, delivery, QA, and thought leadership authority.', control:'Role consolidation eliminates coordination overhead but creates capacity ceiling. Track utilization to know when to delegate.' },
+  { code:'O.02', name:'GovAdvisor', full:'AI Governance Advisor', domain:'operating', layer:'PROCESS', risk:'core', pii:true, mutation:false, audit:true, ai:true, weight:1, desc:'Engagement role. Risk assessments, governance framework design, compliance mapping, human oversight protocol development, checkpoint enforcement.', control:'This role enforces the gates. Authority to halt an engagement is non-negotiable.' },
+  { code:'O.03', name:'DataLead', full:'Data Readiness Lead', domain:'operating', layer:'PROCESS', risk:'core', pii:true, mutation:true, audit:true, ai:false, weight:1, desc:'Engagement role. Data quality audits, SOQL-based 10-metric assessment, deduplication analysis, AI data preparation, field-level security review.', control:'Data Readiness Lead\'s report drives Checkpoint 1. The 7/10 score is their authority.' },
+  { code:'O.04', name:'TrainLead', full:'Training Lead', domain:'operating', layer:'PROCESS', risk:'supporting', pii:false, mutation:false, audit:false, ai:true, weight:1, desc:'Engagement role. Client AI literacy workshops, Salesforce admin AI enablement, governance documentation training, EU AI Act literacy compliance.', control:'EU AI Act Article 4 requires AI literacy training for staff using high-risk systems. This role satisfies that obligation.' },
+  { code:'O.05', name:'Advisors', full:'External Advisors', domain:'operating', layer:'PROCESS', risk:'supporting', pii:false, mutation:false, audit:false, ai:false, weight:1, desc:'Cultivated network of 2-3 vetted specialists. Peer review of frameworks, sector-specific compliance guidance (healthcare, government), award nomination support, overflow capacity.', control:'Advisors are not subcontractors. Boundaries on engagement involvement protect client confidentiality and CCC IP.' },
+  { code:'O.06', name:'WeeklyOps', full:'Weekly Operations Review', domain:'operating', layer:'PROCESS', risk:'supporting', pii:false, mutation:false, audit:true, ai:false, weight:1, desc:'60-minute weekly review: pipeline, active engagements, framework updates, content calendar.', control:'Cadence drift here means the practice is reactive instead of operated. Skip two weeks and the symptoms appear in client engagements.' },
+  { code:'O.07', name:'MonthAudit', full:'Monthly Framework Audit', domain:'operating', layer:'PROCESS', risk:'core', pii:false, mutation:false, audit:true, ai:true, weight:1, desc:'90-minute monthly framework audit: review governance tools against new regulations, Salesforce releases, client feedback.', control:'Salesforce ships AI features in every seasonal release. Monthly cadence is the minimum to stay current.' },
+  { code:'O.08', name:'QtrKPI', full:'Quarterly Performance Review', domain:'operating', layer:'PROCESS', risk:'core', pii:false, mutation:false, audit:true, ai:false, weight:1, desc:'2-hour quarterly review: KPI dashboard, client outcomes, thought leadership metrics, award pipeline.', control:'Quarter-over-quarter delta on leading indicators is the canary. Watch the trend, not the snapshot.' },
+  { code:'C.01', name:'DataReady', full:'CP1: Data Readiness', domain:'checkpoints', layer:'PROCESS', risk:'critical', pii:true, mutation:true, audit:true, ai:true, weight:3, desc:'Gate criteria: Data quality score 7/10 or higher. Duplicates below threshold. Sharing model audited. NIST function: MAP. Documentation: Data Quality Assessment Report.', control:'This gate fails most often. Build the audit findings into the engagement plan from day one.' },
+  { code:'C.02', name:'PermAudit', full:'CP2: Permission and Access', domain:'checkpoints', layer:'PROCESS', risk:'critical', pii:true, mutation:false, audit:true, ai:true, weight:2, desc:'Gate criteria: Field-level security verified. AI user access matrix documented. Einstein Trust Layer configured. NIST function: GOVERN. Documentation: Permission Audit Log.', control:'Trust Layer must be on. Verify with a screenshot of the configuration, not a verbal confirmation.' },
+  { code:'C.03', name:'DesignRev', full:'CP3: Design Review', domain:'checkpoints', layer:'PROCESS', risk:'critical', pii:false, mutation:true, audit:true, ai:true, weight:2, desc:'Gate criteria: Use case risk classified. Human oversight requirements defined. Escalation protocols documented. NIST functions: MAP + GOVERN. Documentation: AI Decision Log Entry.', control:'Risk classification anchors checkpoint depth downstream. Get this wrong and every later step is sized incorrectly.' },
+  { code:'C.04', name:'AgenticRev', full:'CP4: Agentic Governance Rev', domain:'checkpoints', layer:'PROCESS', risk:'critical', pii:true, mutation:true, audit:true, ai:true, weight:3, desc:'Gate criteria: Agent authorization boundaries defined. Agent Fabric guardrails configured. Agent Script business logic validated. Session Tracing enabled. Human confirmation gates set for data-modifying actions. NIST functions: GOVERN + MAP. Documentation: Agentic Governance Checklist.', control:'Added v1.1 for Headless 360. Skip this for agentic engagements and you\'ve shipped an unguarded agent.' },
+  { code:'C.05', name:'PreProdVal', full:'CP5: Pre-Production Val', domain:'checkpoints', layer:'PROCESS', risk:'critical', pii:true, mutation:true, audit:true, ai:true, weight:2, desc:'Gate criteria: Test results documented. Bias checks completed. Rollback procedure tested. Audit logging confirmed. Agent-triggered workflow validation completed. NIST function: MEASURE. Documentation: Validation Report.', control:'Untested rollback is not a rollback. The test must produce evidence.' },
+  { code:'C.06', name:'PostLaunch', full:'CP6: Post-Launch Gov', domain:'checkpoints', layer:'PROCESS', risk:'core', pii:true, mutation:true, audit:true, ai:true, weight:2, desc:'Gate criteria: 30-day monitoring review. Drift indicators baselined. Governance handoff documentation complete. Agent behavior audit completed. NIST function: MANAGE. Documentation: Post-Launch Governance Report.', control:'Most failures show up between day 7 and day 30. The 30-day review catches them before they become incidents.' },
+  { code:'T.01', name:'Scorecard', full:'AI Readiness Scorecard', domain:'tools', layer:'TOOL', risk:'core', pii:false, mutation:false, audit:true, ai:true, weight:2, desc:'15-question weighted assessment across five categories: Data Quality, Governance Readiness, Automation Maturity, AI Preparedness, Documentation Health. Numerical baseline 0-100. Live at clearconciseconsulting.com/scorecard.', control:'Scorecard results auto-route to a triage call. Track conversion rates monthly.' },
+  { code:'T.02', name:'HVF', full:'Human Validation Framework', domain:'tools', layer:'TOOL', risk:'critical', pii:true, mutation:true, audit:true, ai:true, weight:2, desc:'Structured protocol establishing mandatory human review checkpoints at each stage of AI-assisted decision-making. Documents reviewers, conditions, escalation paths, override records, and human-AI agreement rates over time.', control:'This is the load-bearing tool for human oversight. If HVF says no, the action does not proceed.' },
+  { code:'T.03', name:'DecisionLog', full:'AI Decision Log', domain:'tools', layer:'TOOL', risk:'critical', pii:true, mutation:true, audit:true, ai:true, weight:2, desc:'Salesforce-native custom object structure recording every AI-assisted decision with confidence scoring, data source verification, human review status, and override documentation. Required for OMB M-25-21 compliance. M-25-21 implementation deadline elapsed April 2026; federal AI use cases are now in active enforcement, not preparatory phase. Companion memo M-25-22 governs federal AI procurement (applies to solicitations after October 1, 2025).', control:'Required for OMB M-25-21 compliance. Set retention period in writing per regulatory baseline.' },
+  { code:'T.04', name:'AgenticChk', full:'Agentic Governance Checklist', domain:'tools', layer:'TOOL', risk:'critical', pii:true, mutation:true, audit:true, ai:true, weight:2, desc:'14-item pre-deployment checklist for engagements involving Agentforce, Headless 360 MCP tools, or third-party agents. Authorization boundaries, integration user permissions, Agent Fabric, Agent Script, human gates, Session Tracing, validation rules, governor limits, rollback plan, agent code review.', control:'All 14 items must be met before any agent goes live. No partial credit.' },
+  { code:'T.05', name:'DataAudit', full:'10-Metric Data Quality Audit', domain:'tools', layer:'TOOL', risk:'critical', pii:true, mutation:false, audit:true, ai:false, weight:2, desc:'SOQL-based 10-metric data quality assessment. Completeness, accuracy, consistency, validity, uniqueness, timeliness, integrity, conformity, lineage, accessibility. Output: Data Quality Score 0-10.', control:'Score below 7 fails Checkpoint 1. Document remediation plan as Phase 1 of any engagement.' },
+  { code:'T.06', name:'AuthMatrix', full:'Agent Authorization Matrix', domain:'tools', layer:'TOOL', risk:'critical', pii:true, mutation:true, audit:true, ai:true, weight:2, desc:'Documented mapping of each agent to its integration user permissions, MCP tool access, action boundaries, and approval gates. Required for every agentic engagement.', control:'Without this matrix, an agent\'s authorization is implicit. Implicit authorization is invisible authorization.' },
+  { code:'S.01', name:'AgentRdy', full:'Agentforce Readiness Assess', domain:'services', layer:'SERVICE', risk:'core', pii:true, mutation:false, audit:true, ai:true, weight:1, desc:'2-4 weeks. $6K-$12K. Data quality audit, permission review, risk classification, governance roadmap.', control:'Entry-tier engagement. Often the wedge into larger governance work.' },
+  { code:'S.02', name:'AIGovImpl', full:'AI Governance Implementation', domain:'services', layer:'SERVICE', risk:'core', pii:true, mutation:true, audit:true, ai:true, weight:2, desc:'4-8 weeks. $15K-$30K. Full NIST-aligned governance build: policies, checkpoints, documentation, training, rollback procedures.', control:'Anchor service. Includes all six checkpoints. Where the framework gets fully exercised.' },
+  { code:'S.03', name:'NPGovKit', full:'Nonprofit AI Governance Kit', domain:'services', layer:'SERVICE', risk:'core', pii:true, mutation:false, audit:true, ai:true, weight:1, desc:'2-3 weeks. $4K-$8K. AI inventory, acceptable use policy, human oversight protocol, board reporting template.', control:'Productized for nonprofits with limited budget. Watch margin: pricing depends on tight scope discipline.' },
+  { code:'S.04', name:'TrustLyrCfg', full:'Einstein Trust Layer Config', domain:'services', layer:'SERVICE', risk:'core', pii:true, mutation:true, audit:true, ai:true, weight:1, desc:'1-2 weeks. $3K-$6K. Data masking, audit trail activation, toxicity monitoring, agent guardrails.', control:'Often runs as a fast-track engagement before a larger governance build.' },
+  { code:'S.05', name:'AILiteracy', full:'AI Literacy Training', domain:'services', layer:'SERVICE', risk:'supporting', pii:false, mutation:false, audit:false, ai:true, weight:1, desc:'Half or full day. $2K-$4K. Workshop covering AI fundamentals, governance, Salesforce AI features, Trust Layer orientation.', control:'Satisfies EU AI Act Article 4 literacy obligation for staff using high-risk systems.' },
+  { code:'S.06', name:'GovRetainer', full:'Quarterly Governance Retainer', domain:'services', layer:'SERVICE', risk:'core', pii:true, mutation:false, audit:true, ai:true, weight:1, desc:'Quarterly. $3K-$5K/qtr. Ongoing monitoring, regulatory updates, framework maintenance, annual re-assessment.', control:'Recurring revenue. Renewal rate is the canary metric for client outcome quality.' },
+  { code:'S.07', name:'DLogSetup', full:'AI Decision Log Setup', domain:'services', layer:'SERVICE', risk:'core', pii:true, mutation:true, audit:true, ai:true, weight:1, desc:'1 week. $2K-$4K. Salesforce-native decision tracking for AI outputs, human overrides, audit documentation.', control:'Often delivered as part of larger engagement. Standalone for clients ready to build their own audit trail.' },
+  { code:'S.08', name:'AgenticAdv', full:'Agentic Governance Advisory', domain:'services', layer:'SERVICE', risk:'core', pii:true, mutation:true, audit:true, ai:true, weight:2, desc:'2-4 weeks. $8K-$18K. Agent authorization design, Agent Fabric configuration, data governance hardening for Headless 360, Session Tracing setup, post-deployment agent behavior audit. Added v1.1.', control:'New for v1.1. Pricing reflects depth required to govern agent-operated systems.' },
+  { code:'R.01', name:'EmergRoll', full:'Emergency Rollback', domain:'controls', layer:'CONTROL', risk:'critical', pii:false, mutation:true, audit:true, ai:true, weight:2, desc:'Documented procedure to deactivate Agentforce agents, remove AI permissions, restore prior state. Trigger: AI producing harmful, inaccurate, or non-compliant outputs.', control:'Test annually. Untested rollback is not a control.' },
+  { code:'R.02', name:'HumanOvr', full:'Human Override Authority', domain:'controls', layer:'CONTROL', risk:'critical', pii:false, mutation:true, audit:true, ai:true, weight:2, desc:'Named individual at client org empowered to halt any AI process. Trigger: any checkpoint failure or escalated concern.', control:'Named in writing at engagement intake. Authority does not require approval to invoke.' },
+  { code:'R.03', name:'MaskVerify', full:'Data Masking Verification', domain:'controls', layer:'CONTROL', risk:'critical', pii:true, mutation:false, audit:true, ai:true, weight:2, desc:'Pre-deployment audit confirming Einstein Trust Layer masking is active for all sensitive fields. Trigger: every engagement involving AI plus PII or PHI.', control:'Verify with screenshot, not verbal. Required artifact in Permission Audit Log.' },
+  { code:'R.04', name:'ScopeBnd', full:'Scope Boundary Enforcement', domain:'controls', layer:'CONTROL', risk:'core', pii:false, mutation:true, audit:true, ai:true, weight:1, desc:'AI agents limited to approved topics and actions via Agentforce topic classification. Trigger: Agent Builder configuration.', control:'Topic classification is the simplest scope control. Add Agent Script for harder boundaries.' },
+  { code:'R.05', name:'QtrlyReview', full:'Quarterly Governance Review', domain:'controls', layer:'CONTROL', risk:'core', pii:true, mutation:false, audit:true, ai:true, weight:1, desc:'Scheduled review of all active AI deployments against current regulatory requirements. Calendar-driven. Accelerated if regulations change.', control:'Skipping a quarter creates compliance debt. Compliance debt compounds.' },
+  { code:'R.06', name:'AgentKill', full:'Agent Kill Switch', domain:'controls', layer:'CONTROL', risk:'critical', pii:true, mutation:true, audit:true, ai:true, weight:2, desc:'Documented procedure to revoke integration user access, disable MCP tools, and halt Agent Fabric orchestration for specific agents. Trigger: agent producing bulk erroneous data, exceeding authorization boundaries, or failing Session Tracing audit.', control:'Agent acts at machine speed. Kill switch must be invokable in under five minutes by named owner.' },
+  { code:'R.07', name:'DataIso', full:'Agent Data Isolation', domain:'controls', layer:'CONTROL', risk:'critical', pii:true, mutation:true, audit:true, ai:true, weight:2, desc:'All agent-created records tagged with source identifier for bulk query and reversal. Required for every agentic engagement.', control:'Source identifier field on every object the agent can write. Without it, agent-created data is indistinguishable from human-entered data.' },
+  { code:'M.01', name:'Scorecards', full:'Scorecards Completed', domain:'metrics', layer:'METRIC', risk:'supporting', pii:false, mutation:false, audit:false, ai:true, weight:1, desc:'Leading indicator. Year 1 target: 100+. Source: website analytics. Top of pipeline.', control:'Drop in scorecard volume signals content and SEO health, not just AI demand.' },
+  { code:'M.02', name:'Pipeline', full:'Engagement Pipeline', domain:'metrics', layer:'METRIC', risk:'core', pii:false, mutation:false, audit:true, ai:false, weight:1, desc:'Leading indicator. Year 1 target: $150K+. Source: CRM tracking.', control:'Pipeline weighted by stage. Coverage ratio of 3x quota minimum.' },
+  { code:'M.03', name:'Engagements', full:'Engagements Completed', domain:'metrics', layer:'METRIC', risk:'core', pii:false, mutation:false, audit:true, ai:false, weight:1, desc:'Lagging indicator. Year 1 target: 8-12. Source: engagement log.', control:'Track at completion not signature. Completion is when the post-launch governance report ships.' },
+  { code:'M.04', name:'Revenue', full:'CoE Service Revenue', domain:'metrics', layer:'METRIC', risk:'core', pii:false, mutation:false, audit:true, ai:false, weight:1, desc:'Lagging indicator. Year 1 target: $120K-$200K. Source: financial records.', control:'Mix matters. Recurring (retainer) vs project. Track ratio quarterly.' },
+  { code:'M.05', name:'DataLift', full:'Client Data Quality Lift', domain:'metrics', layer:'METRIC', risk:'core', pii:true, mutation:false, audit:true, ai:false, weight:1, desc:'Lagging indicator. Year 1 target: 30%+ average improvement. Source: pre/post assessment comparison.', control:'This is the outcome metric for the Data First principle. Without lift, the principle is ceremonial.' },
+  { code:'M.06', name:'SuccessRate', full:'AI Deployment Success Rate', domain:'metrics', layer:'METRIC', risk:'critical', pii:false, mutation:false, audit:true, ai:true, weight:1, desc:'Lagging indicator. Year 1 target: 90%+ (no failures in 90 days). Source: client follow-up.', control:'This is the practice\'s reputation metric. Single failure can offset months of pipeline.' },
+  { code:'M.07', name:'PrevFails', full:'Prevented AI Failures', domain:'metrics', layer:'METRIC', risk:'core', pii:false, mutation:false, audit:true, ai:true, weight:1, desc:'Lagging indicator. Year 1 target: 3+ documented with dollar values. Source: client documentation.', control:'Case study fuel. Each prevented failure with dollar amount becomes content, sales evidence, and award submission material.' },
+];
+
+const DOMAINS = {
+  foundations: { label: 'Foundations',  color: '#003366', desc: 'Mission, scope, principles, and framework alignment.' },
+  operating:   { label: 'Operating Model', color: '#5B6B8C', desc: 'Roles, structure, and review cadence.' },
+  checkpoints: { label: 'Checkpoints', color: '#8B3A2C', desc: 'The six mandatory governance gates per engagement.' },
+  tools:       { label: 'Tools & Frameworks', color: '#2A6FB5', desc: 'Active assessment instruments and runtime tools.' },
+  services:    { label: 'Services',     color: '#3A6B3A', desc: 'Client engagement offerings and pricing tiers.' },
+  controls:    { label: 'Risk Controls', color: '#6B3A8B', desc: 'Mitigations and emergency procedures.' },
+  metrics:     { label: 'Metrics',      color: '#B58A1A', desc: 'Leading and lagging indicators of practice health.' }
+};
+
+const LAYER_LABELS = {
+  DOC:     'Document',
+  PROCESS: 'Process',
+  TOOL:    'Tool',
+  SERVICE: 'Service',
+  CONTROL: 'Control',
+  METRIC:  'Metric'
+};
+
+const RISK_LABELS = {
+  critical:   'Critical',
+  core:       'Core',
+  supporting: 'Supporting'
+};
+
+const LENSES = {
+  domain: 'View by Domain',
+  risk:   'View by Risk',
+  ai:     'AI Surface'
+};
+
+let activeLens = 'domain';
+let searchQuery = '';
+
+// ===== RENDER DOMAIN MAP =====
+const domainsGrid = document.getElementById('domains-grid');
+
+function renderDomainMap() {
+  domainsGrid.innerHTML = '';
+  const domainOrder = ['foundations', 'checkpoints', 'tools', 'operating', 'services', 'controls', 'metrics'];
+
+  domainOrder.forEach(domainKey => {
+    const domain = DOMAINS[domainKey];
+    const items = ELEMENTS.filter(e => e.domain === domainKey);
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'domain';
+    wrapper.dataset.domain = domainKey;
+
+    const header = document.createElement('div');
+    header.className = 'domain-header';
+    header.innerHTML = `
+      <div class="domain-name">${domain.label}</div>
+      <div class="domain-count">${items.length} elements</div>
+    `;
+    wrapper.appendChild(header);
+
+    const cellsGrid = document.createElement('div');
+    cellsGrid.className = 'domain-cells';
+    items.forEach(el => cellsGrid.appendChild(buildCell(el)));
+    wrapper.appendChild(cellsGrid);
+
+    domainsGrid.appendChild(wrapper);
+  });
+}
+
+function buildCell(el) {
+  const cell = document.createElement('div');
+  cell.className = 'cell';
+  cell.dataset.code = el.code;
+  cell.dataset.risk = el.risk;
+  cell.dataset.domain = el.domain;
+  cell.dataset.layer = el.layer;
+  cell.dataset.weight = el.weight;
+  cell.dataset.ai = String(el.ai);
+
+  let marksHTML = '<div class="cell-marks">';
+  if (el.pii)      marksHTML += '<div class="cell-mark pii" title="Touches PII"></div>';
+  if (el.mutation) marksHTML += '<div class="cell-mark mutation" title="Involves data/system mutation"></div>';
+  if (el.audit)    marksHTML += '<div class="cell-mark audit" title="Produces audit evidence"></div>';
+  if (el.ai)       marksHTML += '<div class="cell-mark ai-glow" title="Activated for AI/agentic engagements"></div>';
+  marksHTML += '</div>';
+
+  cell.innerHTML = `
+    <div>
+      <div class="cell-code">${el.code}</div>
+      <div class="cell-layer">${el.layer}</div>
+      <div class="cell-name">${el.name}</div>
+    </div>
+    ${marksHTML}
+  `;
+
+  cell.addEventListener('click', () => openDetail(el));
+  return cell;
+}
+
+// ===== RENDER GOVERNANCE STRIP =====
+const govPiiRow      = document.getElementById('gov-row-pii');
+const govMutationRow = document.getElementById('gov-row-mutation');
+const govAuditRow    = document.getElementById('gov-row-audit');
+
+function renderGovStrip() {
+  // Sort by code so the strip alignment is stable across lenses
+  const sorted = [...ELEMENTS].sort((a, b) => a.code.localeCompare(b.code));
+  govPiiRow.innerHTML      = '';
+  govMutationRow.innerHTML = '';
+  govAuditRow.innerHTML    = '';
+
+  sorted.forEach(el => {
+    govPiiRow.appendChild(makeTick(el, 'pii'));
+    govMutationRow.appendChild(makeTick(el, 'mutation'));
+    govAuditRow.appendChild(makeTick(el, 'audit'));
+  });
+}
+
+function makeTick(el, mark) {
+  const t = document.createElement('div');
+  t.className = `gov-tick ${el[mark] ? 'active ' + mark : ''}`;
+  t.dataset.code = el.code;
+  t.title = `${el.code} ${el.name}${el[mark] ? ': ' + mark : ''}`;
+  t.addEventListener('click', () => openDetail(el));
+  t.addEventListener('mouseenter', () => highlightCode(el.code, true));
+  t.addEventListener('mouseleave', () => highlightCode(el.code, false));
+  return t;
+}
+
+function highlightCode(code, on) {
+  document.querySelectorAll(`[data-code="${code}"]`).forEach(node => {
+    if (on) node.classList.add('hover-match');
+    else node.classList.remove('hover-match');
+  });
+}
+
+// ===== LENS TOGGLE =====
+function setupLensButtons() {
+  document.querySelectorAll('.lens-btn[data-lens]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeLens = btn.dataset.lens;
+      document.querySelectorAll('.lens-btn[data-lens]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyLens();
+    });
+  });
+}
+
+function applyLens() {
+  const cells = document.querySelectorAll('.cell');
+  cells.forEach(cell => {
+    cell.classList.remove('dimmed', 'match', 'emphasized');
+    const code = cell.dataset.code;
+    const el = ELEMENTS.find(e => e.code === code);
+    if (!el) return;
+
+    if (activeLens === 'risk') {
+      // Emphasize critical, dim supporting
+      if (el.risk === 'supporting') cell.classList.add('dimmed');
+      else if (el.risk === 'critical') cell.classList.add('emphasized');
+    } else if (activeLens === 'ai') {
+      // Show only AI-surface elements
+      if (!el.ai) cell.classList.add('dimmed');
+    }
+    // 'domain' lens is the default, no changes
+
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      const matchSearch = el.code.toLowerCase().includes(q) ||
+                          el.name.toLowerCase().includes(q) ||
+                          el.full.toLowerCase().includes(q) ||
+                          el.desc.toLowerCase().includes(q) ||
+                          el.layer.toLowerCase().includes(q) ||
+                          (DOMAINS[el.domain].label.toLowerCase().includes(q));
+      if (!matchSearch) {
+        cell.classList.add('dimmed');
+      } else {
+        cell.classList.remove('dimmed');
+        cell.classList.add('match');
+      }
+    }
+  });
+
+  updateGovSummary();
+}
+
+// ===== SEARCH =====
+const searchInput = document.getElementById('search');
+searchInput.addEventListener('input', (e) => {
+  searchQuery = e.target.value.trim();
+  applyLens();
+});
+
+// ===== GOV SUMMARY =====
+function updateGovSummary() {
+  // Account for active lens when computing visible elements
+  const visibleCells = document.querySelectorAll('.cell:not(.dimmed)');
+  const visibleCodes = new Set();
+  visibleCells.forEach(c => visibleCodes.add(c.dataset.code));
+  const visible = ELEMENTS.filter(e => visibleCodes.has(e.code));
+
+  document.getElementById('stat-total').textContent = visible.length;
+  document.getElementById('stat-pii').textContent = visible.filter(e => e.pii).length;
+  document.getElementById('stat-mutation').textContent = visible.filter(e => e.mutation).length;
+  document.getElementById('stat-audit').textContent = visible.filter(e => e.audit).length;
+
+  // Update inline search counter
+  const counter = document.getElementById('search-count');
+  if (searchQuery && searchQuery.length > 0) {
+    counter.textContent = `${visible.length} of ${ELEMENTS.length}`;
+    counter.classList.add('visible');
+  } else {
+    counter.classList.remove('visible');
+    counter.textContent = '';
+  }
+}
+
+// ===== DETAIL PANEL =====
+const panel = document.getElementById('detail-panel');
+const closeBtn = document.getElementById('detail-close');
+
+function openDetail(el) {
+  const dom = DOMAINS[el.domain];
+  document.getElementById('detail-cat-bar').style.background = dom.color;
+  document.getElementById('detail-code').textContent = el.code;
+  document.getElementById('detail-name').textContent = el.name;
+  document.getElementById('detail-full').textContent = el.full;
+
+  const pills = document.getElementById('detail-pills');
+  let pillsHTML = `<span class="detail-pill">${dom.label}</span>`;
+  pillsHTML += `<span class="detail-pill">${LAYER_LABELS[el.layer]}</span>`;
+  pillsHTML += `<span class="detail-pill" data-risk="${el.risk}">${RISK_LABELS[el.risk]}</span>`;
+  if (el.ai) pillsHTML += `<span class="detail-pill" style="background: linear-gradient(135deg, #FFD700 0%, #B58A1A 100%); color: var(--navy); border-color: #B58A1A;">AI Surface</span>`;
+  pills.innerHTML = pillsHTML;
+
+  let marksHTML = '';
+  if (el.pii)      marksHTML += '<span class="detail-mark-pill pii">PII</span>';
+  if (el.mutation) marksHTML += '<span class="detail-mark-pill mutation">Mutation</span>';
+  if (el.audit)    marksHTML += '<span class="detail-mark-pill audit">Audit</span>';
+  if (!marksHTML) marksHTML = '<em style="color: var(--muted); font-size: 12px;">No governance marks</em>';
+
+  const body = document.getElementById('detail-body');
+  body.innerHTML = `
+    <div class="detail-row">
+      <div class="detail-label">Description</div>
+      <div class="detail-value">${el.desc}</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">Governance Marks</div>
+      <div class="detail-value"><div class="detail-marks">${marksHTML}</div></div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">Risk Tier</div>
+      <div class="detail-value">${RISK_LABELS[el.risk]}: ${
+        el.risk === 'critical' ? 'practice fails if this fails' :
+        el.risk === 'core' ? 'needed for engagement quality' :
+        'improves but does not gate'
+      }</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">What to Control</div>
+      <div class="detail-value">
+        <div class="control-callout">
+          <span class="control-callout-label">Decision Frame</span>
+          ${el.control}
+        </div>
+      </div>
+    </div>
+  `;
+
+  panel.classList.add('open');
+  panel.setAttribute('aria-hidden', 'false');
+}
+
+closeBtn.addEventListener('click', () => {
+  panel.classList.remove('open');
+  panel.setAttribute('aria-hidden', 'true');
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    panel.classList.remove('open');
+    panel.setAttribute('aria-hidden', 'true');
+  }
+});
+
+// ===== RENDER INDEX =====
+function renderIndex() {
+  const indexList = document.getElementById('index-list');
+  const sorted = [...ELEMENTS].sort((a, b) => a.code.localeCompare(b.code));
+  indexList.innerHTML = sorted.map(el => `
+    <li class="index-item" data-code="${el.code}">
+      <strong>${el.code}</strong>
+      <span class="name">${el.full}.</span>
+      <span class="desc"> ${el.desc.slice(0, 95)}${el.desc.length > 95 ? '…' : ''}</span>
+    </li>
+  `).join('');
+  indexList.querySelectorAll('.index-item').forEach(li => {
+    li.style.cursor = 'pointer';
+    li.addEventListener('click', () => {
+      const el = ELEMENTS.find(e => e.code === li.dataset.code);
+      if (el) openDetail(el);
+    });
+  });
+}
+
+// ===== STARTUP =====
+renderDomainMap();
+renderGovStrip();
+renderIndex();
+setupLensButtons();
+updateGovSummary();
+
+</script>
+
+</body>
+</html>
