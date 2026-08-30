@@ -1390,7 +1390,10 @@ function animateScore(target) {
 // ============================================
 function reportHeight() {
   if (window.parent !== window) {
-    const height = document.documentElement.scrollHeight;
+    // Use the content height, not the iframe viewport height. The parent adds
+    // 20px of breathing room, so documentElement.scrollHeight would otherwise
+    // grow by another 20px on every resize event.
+    const height = Math.ceil(document.body.scrollHeight);
     window.parent.postMessage({
       type: 'scorecard-height',
       height: height
